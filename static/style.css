@@ -1,0 +1,135 @@
+· CSS
+/* ===== Reset & Base ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ 
+body {
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  background: url("sky.jpg") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+/* center tag is deprecated but since it's in your html, this keeps it from breaking layout */
+center {
+  width: 100%;
+}
+ 
+/* ===== Glass Card ===== */
+.card {
+  width: 360px;
+  margin: 0 auto;
+  padding: 32px 28px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 28px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+ 
+.title {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+ 
+/* ===== Search Box ===== */
+.search_box {
+  position: relative;
+  width: 100%;
+}
+ 
+.search_box form {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 24px;
+  padding: 10px 18px;
+}
+ 
+.search_icon {
+  color: #4a4a4a;
+  font-size: 1.2rem;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+ 
+.search_box input[type="text"] {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  color: #2b2b2b;
+}
+ 
+.search_box input[type="text"]::placeholder {
+  color: #5a5a5a;
+}
+ 
+.search_box button {
+  border: none;
+  background: rgba(255, 255, 255, 0.6);
+  color: #2b2b2b;
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 16px;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+ 
+.search_box button:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+ 
+/* ===== Result Display ===== */
+.result {
+  color: #ffffff;
+  text-align: center;
+  margin-top: 8px;
+}
+ 
+.result p {
+  margin: 6px 0;
+  font-size: 1rem;
+}
+ 
+.search_box a {
+  display: inline-block;
+  margin-top: 14px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+ 
+/* ===== Error Message ===== */
+.error message {
+  color: #ffe3e3;
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+.result .temp-text{
+  font-size: 50px;
+  font-weight: 600;
+}
+.result .weather-icon {
+  width: 80px;
+  height: 80px;
+  margin: 8px auto;
+  display: block;
+}
