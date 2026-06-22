@@ -118,7 +118,7 @@ center {
 }
  
 /* ===== Error Message ===== */
-.error message {
+.error_message {
   color: #ffe3e3;
   margin-top: 12px;
   font-size: 0.9rem;

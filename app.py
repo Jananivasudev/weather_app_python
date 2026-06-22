@@ -1,22 +1,25 @@
 
-from flask import Flask, render_template,Response,request
+from flask import Flask, render_template,request
 from datetime import datetime
 import requests
 import os
 
 app = Flask(__name__)
 url = "https://api.open-meteo.com/v1/forecast"
+url_geo = "https://geocoding-api.open-meteo.com/v1/search"
 def get_coordinates(city_name):
-    url_geo = "https://geocoding-api.open-meteo.com/v1/search"
+    
     params = {
-        "name": city_name,
-        "count": 1  # just get the top match
+            "name": city_name,
+            "count": 1  # just get the top match
     }
-    response = requests.get(url_geo, params=params,timeout = 10)
-    data = response.json()
-
+    try:
+        response = requests.get(url_geo, params=params,timeout = 10)
+        data = response.json()
+    except requests.exceptions.RequestException:
+        return None
     if "results" not in data:
-        return None  # city not found
+        return None # city not found
 
     result = data["results"][0]
     matched_name = result["name"]
@@ -30,13 +33,11 @@ def get_weather(lat,long):
            'current' : 'temperature_2m,weather_code',
            'timezone' : 'auto'
       }
-    response = requests.get(url,params,timeout = 10)
-    data = response.json()
-    #   times = data['hourly']['time']
-    #   if now in times:
-    #     idx = times.index(now)
-    #   else:
-    #      idx = None
+    try:
+        response = requests.get(url,params = params,timeout = 10)
+        data = response.json()
+    except requests.exceptions.RequestException:
+        return None,None
     if 'current' not in data :
       return None,None
     return data['current']['temperature_2m'],data['current']['weather_code']
@@ -74,29 +75,27 @@ def index():
     error = None
     icon = None
     if(request.method == 'POST'):
-        city = request.form.get('content')
+        city = request.form.get('content', '').strip()
         if city:
           coordinates = get_coordinates(city)
           if coordinates :
                 latitude,longitude,name = coordinates
                 time = datetime.now().strftime("%I:%M %p")
-                # current_hour = now.strftime("%Y-%m-%dT%H:00")
                 temp,weather_code= get_weather(latitude,longitude)
                 if(temp is None or weather_code is None):
-                    error = "errror!,city not found"
-                    city = None
+                    error = "Weather service is unavailable for a moment please try again after sometime"
                 else:
                    description,icon= get_description(weather_code)
           else:
-            error = "errror!,city not found"
-            city = None
+            error = f"couldn't find {city},please check the spelling and try again"
         else:
-            error = "errror!,city not found"
-            city = None
+            error = "please enter a city"
+         
            
     return render_template('index.html',temp = temp,city = name,time = time,description = description,error = error,icon = icon )
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
+    debug_mode = os.environ.get("FLASK_DEBUG", "False") == "True"
+    app.run(debug= debug_mode, host='0.0.0.0', port=port)
     
