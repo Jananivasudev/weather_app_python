@@ -37,10 +37,10 @@ def get_weather(lat,long):
         response = requests.get(url,params = params,timeout = 10)
         data = response.json()
     except requests.exceptions.RequestException:
-        return None,None
+        return None,None,None
     if 'current' not in data :
-      return None,None
-    return data['current']['temperature_2m'],data['current']['weather_code']
+      return None,None,None
+    return data['current']['temperature_2m'],data['current']['weather_code'],data['current']['time']
 def get_description(code):
     mapping = {
         0: ("Clear sky", "clear-day"),
@@ -80,8 +80,9 @@ def index():
           coordinates = get_coordinates(city)
           if coordinates :
                 latitude,longitude,name = coordinates
-                time = datetime.now().strftime("%I:%M %p")
-                temp,weather_code= get_weather(latitude,longitude)
+                temp,weather_code,raw_time= get_weather(latitude,longitude)
+                dt = datetime.fromisoformat(raw_time)       # parse it
+                time = dt.strftime("%I:%M %p, %d %b")
                 if(temp is None or weather_code is None):
                     error = "Weather service is unavailable for a moment please try again after sometime"
                 else:
