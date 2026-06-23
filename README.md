@@ -15,16 +15,16 @@ Backend: Flask (Python)
 Weather Data: Open-Meteo API (Geocoding + Forecast endpoints)
 Frontend: HTML, CSS (glassmorphism design)
 Deployment: Render (via Gunicorn)
-Version Control: Git & GitHub
+Version Control: Git & GitHub|
 search page - <img width="944" height="434" alt="image" src="https://github.com/user-attachments/assets/99c7d4a0-3198-4d5e-adaa-9a297855adb4" />
 Result page - <img width="937" height="430" alt="image" src="https://github.com/user-attachments/assets/ce753204-ad41-4be5-83cd-e19369e6c13d" />
 
 Run Locally:
-git clone https://github.com/Jananivasudev/weather_app_python.git
-cd weather_app_python
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+git clone https://github.com/Jananivasudev/weather_app_python.git,
+cd weather_app_python,
+python -m venv venv,
+source venv/bin/activate   # Windows: venv\Scripts\activate,
+pip install -r requirements.txt,
 flask run
 
 What I Learned:
